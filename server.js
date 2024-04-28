@@ -43,10 +43,5 @@ export const textToImage = async () => {
 
     const responseJSON = await response.json();
 
-    responseJSON.artifacts.forEach((image, index) => {
-        fs.writeFileSync(
-            `./out/txt2img_${image.seed}.png`,
-            Buffer.from(image.base64, 'base64')
-        )
-    })
+    return responseJSON.artifacts.map((image) => `data:image/png;base64,${image.base64}`);
 };
