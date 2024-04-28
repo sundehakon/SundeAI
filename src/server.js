@@ -36,7 +36,8 @@ export const textToImage = async () => {
     );
 
     if (!response.ok) {
-        throw new Error(`Non-200 response: ${await response.text()}`)
+        const text = await response.text();
+        throw new Error(`Non-200 response: ${text}`)
     }
 
     const responseJSON = await response.json();
