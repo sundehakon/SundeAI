@@ -28,4 +28,25 @@ export const textToImage = async () => {
         ],
     };
 
-}
+    const response = fetch(
+        path,
+        {
+            headers,
+            method: "POST",
+            body: JSON.stringify(body),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(`Non-200 response: ${await response.text()}`)
+    }
+
+    const responseJSON = await response.json();
+
+    responseJSON.artifacts.forEach((image, index) => {
+        fs.writeFileSync(
+            `./out/txt2img_${image.seed}.png`,
+            Buffer.from(image.base64, 'base64')
+        )
+    })
+};
