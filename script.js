@@ -1,12 +1,19 @@
 const fs = require('fs');
 
 const textToImage = async () => {
+
+  var userPrompt = prompt("Enter your image prompt: ");
+
+  if (!fs.existsSync('./SundeAI')){
+        fs.mkdirSync('./SundeAI');
+  }
+
   const path =
     "https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image";
 
   const headers = {
     Accept: "application/json",
-    Authorization: "Bearer YOUR_API_KEY"
+    Authorization: "Bearer sk-Mf56w61P8rEykhIqe4nk9FisXs16aLmUtIu77eqLbUK5VbZa"
   };
 
   const body = {
@@ -18,7 +25,7 @@ const textToImage = async () => {
 	samples: 1,
 	text_prompts: [
 	  {
-	    "text": "A painting of a cat",
+	    "text": `${userPrompt}`,
 	    "weight": 1
 	  },
 	  {
@@ -31,7 +38,10 @@ const textToImage = async () => {
   const response = await fetch(
     path,
     {
-      headers,
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json',
+      },
       method: "POST",
       body: JSON.stringify(body),
     }
@@ -45,7 +55,7 @@ const textToImage = async () => {
   
   responseJSON.artifacts.forEach((image, index) => {
     fs.writeFileSync(
-      `./out/txt2img_${image.seed}.png`,
+      `./Image/img_${image.seed}.png`,
       Buffer.from(image.base64, 'base64')
     )
   })
