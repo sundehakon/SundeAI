@@ -1,11 +1,18 @@
+require('dotenv').config();
 const fs = require('fs');
+const readline = require('readline');
 
 const textToImage = async () => {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      });
+    
+      rl.question("Enter your image prompt: ", async (userPrompt) => {
 
-  var userPrompt = prompt("Enter your image prompt: ");
 
-  if (!fs.existsSync('./SundeAI')){
-        fs.mkdirSync('./SundeAI');
+  if (!fs.existsSync('./Image')){
+        fs.mkdirSync('./Image');
   }
 
   const path =
@@ -13,7 +20,7 @@ const textToImage = async () => {
 
   const headers = {
     Accept: "application/json",
-    Authorization: "Bearer sk-Mf56w61P8rEykhIqe4nk9FisXs16aLmUtIu77eqLbUK5VbZa"
+    Authorization: "Bearer " + process.env.API_KEY
   };
 
   const body = {
@@ -59,6 +66,9 @@ const textToImage = async () => {
       Buffer.from(image.base64, 'base64')
     )
   })
+      
+  rl.close();
+});
 };
 
 textToImage();
