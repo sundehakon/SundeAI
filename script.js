@@ -10,6 +10,7 @@ const textToImage = async () => {
     
       rl.question("Enter your image prompt: ", async (userPrompt) => {
 
+        console.log("Loading...");
 
   if (!fs.existsSync('./Image')){
         fs.mkdirSync('./Image');
@@ -68,6 +69,7 @@ const textToImage = async () => {
   })
       
   rl.close();
+  console.log("Image generated!");
 });
 };
 
