@@ -2,4 +2,4 @@
 Made with Stability AI and JavaScript
 
 # Example Image
-<img src="/Image/img_1455757375.png" alt="Picture of older gentleman seated on a train"  width="250" height="250"/>
+<img src="/Examples/img_1455757375.png" alt="Painting of a cat"  width="250" height="250"/>
