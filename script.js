@@ -12,8 +12,8 @@ const textToImage = async () => {
 
         console.log("Loading...");
 
-  if (!fs.existsSync('./Image')){
-        fs.mkdirSync('./Image');
+  if (!fs.existsSync('./Images')){
+        fs.mkdirSync('./Images');
   }
 
   const path =
@@ -63,7 +63,7 @@ const textToImage = async () => {
   
   responseJSON.artifacts.forEach((image, index) => {
     fs.writeFileSync(
-      `./Image/img_${image.seed}.png`,
+      `./Images/img_${image.seed}.png`,
       Buffer.from(image.base64, 'base64')
     )
   })
