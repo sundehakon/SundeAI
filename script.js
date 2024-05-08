@@ -19,9 +19,14 @@ const textToImage = async () => {
  `;
     console.log(asciiLogo);
     rl.question("Welcome! Please enter your image prompt: ", async (userPrompt) => {
+      rl.question("Choose image file: (png or jpeg)?: ", async (imageFile) => {
+        if (imageFile !== 'png' && imageFile !== 'jpeg') {
+          console.log("Invalid image file. Please choose png or jpeg.");
+          rl.close();
+        }
         rl.question("Enter folder you want to store images in: ", async (userFolder) => {
 
-            console.log("Loading...");
+            console.log("Starting image generation...");
 
             if (!fs.existsSync(`${userFolder}`)) {
                 fs.mkdirSync(`${userFolder}`);
@@ -71,17 +76,18 @@ const textToImage = async () => {
             const responseJSON = await response.json();
 
             responseJSON.artifacts.forEach((image, index) => {
+              console.log("Saving your image...");
                 fs.writeFileSync(
-                    `./${userFolder}/img_${image.seed}.png`,
+                    `./${userFolder}/img_${image.seed}.${imageFile}`,
                     Buffer.from(image.base64, 'base64')
                 )
             })
 
             rl.close();
-            rl.close();
             console.log("Image generated!");
         });
     });
+  });
 };
 
 textToImage();
