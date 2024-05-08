@@ -62,7 +62,7 @@ const textToImage = async () => {
 
             responseJSON.artifacts.forEach((image, index) => {
                 fs.writeFileSync(
-                    `./Images/img_${image.seed}.png`,
+                    `./${userFolder}/img_${image.seed}.png`,
                     Buffer.from(image.base64, 'base64')
                 )
             })
